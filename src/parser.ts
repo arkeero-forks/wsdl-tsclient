@@ -7,6 +7,20 @@ import { stripExtension } from "./utils/file";
 import { reservedKeywords } from "./utils/javascript";
 import { Logger } from "./utils/logger";
 
+const NODE_SOAP_PARSED_TYPES: { [type: string]: string } = {
+    int: "number",
+    integer: "number",
+    short: "number",
+    long: "number",
+    double: "number",
+    float: "number",
+    decimal: "number",
+    bool: "boolean",
+    boolean: "boolean",
+    dateTime: "Date",
+    date: "Date",
+};
+
 interface ParserOptions {
     modelNamePreffix: string;
     modelNameSuffix: string;
@@ -95,7 +109,7 @@ function parseDefinition(
                             name: stripedPropName,
                             sourceName: propName,
                             description: type,
-                            type: "string",
+                            type: NODE_SOAP_PARSED_TYPES[type] || "string",
                             isArray: true,
                         });
                     } else if (type instanceof ComplexTypeElement) {
@@ -155,7 +169,7 @@ function parseDefinition(
                             name: propName,
                             sourceName: propName,
                             description: type,
-                            type: "string",
+                            type: NODE_SOAP_PARSED_TYPES[type] || "string",
                             isArray: false,
                         });
                     } else if (type instanceof ComplexTypeElement) {
