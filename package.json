@@ -1,5 +1,5 @@
 {
-  "name": "@arkmodules/wsdl-tsclient",
+  "name": "@bot-arkeero/wsdl-tsclient",
   "version": "1.5.1",
   "description": "Generate typescript soap client with typescript definitons from WSDL file.",
   "main": "dist/src/index.js",
@@ -16,7 +16,7 @@
     "test:node-soap2": "ts-node node_modules/tape/bin/tape ./test/node-soap/**/*.test.ts | tap-spec",
     "test:public": "ts-node node_modules/tape/bin/tape ./test/resources-public/**/*.test.ts | tap-spec",
     "preversion": "npm test && npm run build",
-    "prepublishOnly": "npm test && npm run dist",
+    "pr2epublishOnly": "npm test && npm run dist",
     "dev": "ts-node -T ./dev.ts",
     "dist": "tsc",
     "build": "tsc",
@@ -24,10 +24,10 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dderevjanik/wsdl-tsclient.git"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
+  "repository":"git@github.com:arkeero-tech/wsdl-tsclient.git",
   "keywords": [
     "soap",
     "soap-client",
@@ -38,9 +38,9 @@
   "author": "Daniel Derevjanik <daniel.derevjanik@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dderevjanik/wsdl-tsclient/issues"
+    "url": "https://github.com/arkeero-tech/wsdl-tsclient/issues"
   },
-  "homepage": "https://github.com/dderevjanik/wsdl-tsclient#readme",
+  "homepage": "https://github.com/arkeero-tech/wsdl-tsclient#readme",
   "devDependencies": {
     "prettier": "^3.0.3",
     "tap-spec": "^5.0.0",
