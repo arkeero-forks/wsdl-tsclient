@@ -1,6 +1,6 @@
 {
   "name": "@bot-arkeero/wsdl-tsclient",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Generate typescript soap client with typescript definitons from WSDL file.",
   "main": "dist/src/index.js",
   "bin": {
@@ -27,7 +27,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "repository":"git@github.com:arkeero-tech/wsdl-tsclient.git",
+  "repository": "git@github.com:arkeero-tech/wsdl-tsclient.git",
   "keywords": [
     "soap",
     "soap-client",
