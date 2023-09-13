@@ -1,5 +1,5 @@
 {
-  "name": "@bot-arkeero/wsdl-tsclient",
+  "name": "@arkeero-tech/wsdl-tsclient",
   "version": "1.5.2",
   "description": "Generate typescript soap client with typescript definitons from WSDL file.",
   "main": "dist/src/index.js",
@@ -16,7 +16,7 @@
     "test:node-soap2": "ts-node node_modules/tape/bin/tape ./test/node-soap/**/*.test.ts | tap-spec",
     "test:public": "ts-node node_modules/tape/bin/tape ./test/resources-public/**/*.test.ts | tap-spec",
     "preversion": "npm test && npm run build",
-    "pr2epublishOnly": "npm test && npm run dist",
+    "prepublishOnly": "npm test && npm run dist",
     "dev": "ts-node -T ./dev.ts",
     "dist": "tsc",
     "build": "tsc",
@@ -25,7 +25,8 @@
     "lint:fix": "eslint --fix ./src"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com",
+    "access": "internal"
   },
   "repository": "git@github.com:arkeero-tech/wsdl-tsclient.git",
   "keywords": [
