@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-import yargs from "yargs";
+import yargs from "yargs/yargs";
+import { hideBin } from "yargs/helpers";
 import path from "path";
 import { Logger } from "./utils/logger";
 import { parseAndGenerate, Options } from "./index";
 import packageJson from "../package.json";
 
-const conf = yargs(process.argv.slice(2))
+const conf = yargs(hideBin(process.argv.slice(2)))
     .version(packageJson.version)
     .usage("wsdl-tsclient [options] [path]")
     .example("", "wsdl-tsclient file.wsdl -o ./generated/")
@@ -50,7 +51,7 @@ const conf = yargs(process.argv.slice(2))
     .option("no-color", {
         type: "boolean",
         description: "Logs without colors",
-    }).argv;
+    }).parseSync();
 
 // Logger section
 
