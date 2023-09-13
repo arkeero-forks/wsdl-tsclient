@@ -49,7 +49,7 @@ function findReferenceDefiniton(visited: Array<VisitedDefinition>, definitionPar
  * @param name name of definition, will be used as name of interface
  * @param defParts definition's parts - its properties
  * @param stack definitions stack of path to current subdefinition (immutable)
- * @param visitedDefs set of globally visited definitions to avoid circular definitions
+ * @param visitedDefs s et of globally visited definitions to avoid circular definitions
  */
 function parseDefinition(
     parsedWsdl: ParsedWsdl,
