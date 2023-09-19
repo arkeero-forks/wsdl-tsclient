@@ -1,5 +1,5 @@
 {
-  "name": "@arkeero-tech/wsdl-tsclient",
+  "name": "@arkeero-forks/wsdl-tsclient",
   "version": "1.5.2",
   "description": "Generate typescript soap client with typescript definitons from WSDL file.",
   "main": "dist/src/index.js",
@@ -28,7 +28,7 @@
     "registry": "https://npm.pkg.github.com",
     "access": "internal"
   },
-  "repository": "git@github.com:arkeero-tech/wsdl-tsclient.git",
+  "repository": "git@github.com:arkeero-forks/wsdl-tsclient.git",
   "keywords": [
     "soap",
     "soap-client",
@@ -39,9 +39,9 @@
   "author": "Daniel Derevjanik <daniel.derevjanik@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/arkeero-tech/wsdl-tsclient/issues"
+    "url": "https://github.com/arkeero-forks/wsdl-tsclient/issues"
   },
-  "homepage": "https://github.com/arkeero-tech/wsdl-tsclient#readme",
+  "homepage": "https://github.com/arkeero-forks/wsdl-tsclient#readme",
   "devDependencies": {
     "prettier": "^3.0.3",
     "tap-spec": "^5.0.0",
