@@ -53,12 +53,21 @@ export interface Options {
      * @default true
      */
     colors: boolean;
+    /**
+     * Createfolders from wdsl name using tolowercase
+     * @default true
+     */
+    folderFromWsdl2LowerCase: boolean
+
+
 }
 
 export const defaultOptions: Options = {
     emitDefinitionsOnly: false,
     modelNamePreffix: "",
     modelNameSuffix: "",
+
+    folderFromWsdl2LowerCase: true,
     caseInsensitiveNames: false,
     maxRecursiveDefinitionName: 64,
     modelPropertyNaming: null,
@@ -99,7 +108,7 @@ export async function parseAndGenerate(
     Logger.debug(`Parser time: ${timeElapsed(process.hrtime(timeParseStart))}ms`);
 
     const timeGenerateStart = process.hrtime();
-    await generate(parsedWsdl, path.join(outDir, parsedWsdl.name.toLowerCase()), mergedOptions);
+    await generate(parsedWsdl, path.join(outDir, mergedOptions.folderFromWsdl2LowerCase ? parsedWsdl.name.toLowerCase() : parsedWsdl.name), mergedOptions);
     Logger.debug(`Generator time: ${timeElapsed(process.hrtime(timeGenerateStart))}ms`);
 
     Logger.info(`Generating finished: ${timeElapsed(process.hrtime(timeParseStart))}ms`);

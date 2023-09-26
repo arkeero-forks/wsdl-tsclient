@@ -36,6 +36,10 @@ const conf = yargs(hideBin(process.argv.slice(2)))
         type: "boolean",
         description: "Case-insensitive name while parsing definition names",
     })
+    .option("folderFromWsdl2LowerCase", {
+        type: "boolean",
+        description: "To lower case folders from wdsl files",
+    })
     .option("maxRecursiveDefinitionName", {
         type: "number",
         description: "Maximum count of definition's with same name but increased suffix. Will throw an error if exceed",
@@ -106,6 +110,10 @@ if (conf.maxRecursiveDefinitionName || conf.maxRecursiveDefinitionName == 0) {
 if (conf.caseInsensitiveNames) {
     options.caseInsensitiveNames = conf.caseInsensitiveNames;
 }
+if (conf.folderFromWsdl2LowerCase) {
+    options.folderFromWsdl2LowerCase = conf.folderFromWsdl2LowerCase;
+}
+
 
 Logger.debug("Options");
 Logger.debug(JSON.stringify(options, null, 2));
