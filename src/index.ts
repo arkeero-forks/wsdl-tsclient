@@ -57,21 +57,23 @@ export interface Options {
      * Createfolders from wdsl name using tolowercase
      * @default true
      */
-    folderFromWsdl2LowerCase: boolean
-
-
+    folderFromWsdl2LowerCase: boolean;
+    /**
+     * Export imports with filename
+     * @default false
+     */
+    exportAsModule: boolean;
 }
 
 export const defaultOptions: Options = {
     emitDefinitionsOnly: false,
     modelNamePreffix: "",
     modelNameSuffix: "",
-
+    exportAsModule: false,
     folderFromWsdl2LowerCase: true,
     caseInsensitiveNames: false,
     maxRecursiveDefinitionName: 64,
     modelPropertyNaming: null,
-    //
     verbose: false,
     quiet: false,
     colors: true,
@@ -80,7 +82,7 @@ export const defaultOptions: Options = {
 export async function parseAndGenerate(
     wsdlPath: string,
     outDir: string,
-    options: Partial<Options> = {}
+    options: Partial<Options> = {},
 ): Promise<void> {
     const mergedOptions: Options = {
         ...defaultOptions,
@@ -108,7 +110,11 @@ export async function parseAndGenerate(
     Logger.debug(`Parser time: ${timeElapsed(process.hrtime(timeParseStart))}ms`);
 
     const timeGenerateStart = process.hrtime();
-    await generate(parsedWsdl, path.join(outDir, mergedOptions.folderFromWsdl2LowerCase ? parsedWsdl.name.toLowerCase() : parsedWsdl.name), mergedOptions);
+    await generate(
+        parsedWsdl,
+        path.join(outDir, mergedOptions.folderFromWsdl2LowerCase ? parsedWsdl.name.toLowerCase() : parsedWsdl.name),
+        mergedOptions,
+    );
     Logger.debug(`Generator time: ${timeElapsed(process.hrtime(timeGenerateStart))}ms`);
 
     Logger.info(`Generating finished: ${timeElapsed(process.hrtime(timeParseStart))}ms`);

@@ -13,11 +13,13 @@ import { Definition, Method, ParsedWsdl } from "./models/parsed-wsdl";
 import { Logger } from "./utils/logger";
 
 export interface GeneratorOptions {
+    exportAsModule: boolean;
     emitDefinitionsOnly: boolean;
     modelPropertyNaming: ModelPropertyNaming;
 }
 
 const defaultOptions: GeneratorOptions = {
+    exportAsModule: false,
     emitDefinitionsOnly: false,
     modelPropertyNaming: null,
 };
@@ -28,8 +30,11 @@ const defaultOptions: GeneratorOptions = {
 function addSafeImport(
     imports: OptionalKind<ImportDeclarationStructure>[],
     moduleSpecifier: string,
-    namedImport: string
+    namedImport: string,
+    mergedOptions: GeneratorOptions
 ) {
+    if (mergedOptions.exportAsModule) //exportAsModule
+        moduleSpecifier = `${moduleSpecifier}.js`
     if (!imports.find((imp) => imp.moduleSpecifier == moduleSpecifier)) {
         imports.push({
             moduleSpecifier,
@@ -105,7 +110,7 @@ function generateDefinitionFile(
             }
             // If a property is of the same type as its parent type, don't add import
             if (prop.ref.name !== definition.name) {
-                addSafeImport(definitionImports, `./${prop.ref.name}`, prop.ref.name);
+                addSafeImport(definitionImports, `./${prop.ref.name}`, prop.ref.name, options);
             }
             definitionProperties.push(createProperty(prop.name, prop.ref.name, prop.sourceName, prop.isArray));
         }
@@ -178,13 +183,15 @@ export async function generate(
                         addSafeImport(
                             clientImports,
                             `./definitions/${method.paramDefinition.name}`,
-                            method.paramDefinition.name
+                            method.paramDefinition.name,
+                            mergedOptions
                         );
                     }
                     addSafeImport(
                         portImports,
                         `../definitions/${method.paramDefinition.name}`,
-                        method.paramDefinition.name
+                        method.paramDefinition.name,
+                        mergedOptions
                     );
                 }
                 if (method.returnDefinition !== null) {
@@ -201,13 +208,15 @@ export async function generate(
                         addSafeImport(
                             clientImports,
                             `./definitions/${method.returnDefinition.name}`,
-                            method.returnDefinition.name
+                            method.returnDefinition.name,
+                            mergedOptions
                         );
                     }
                     addSafeImport(
                         portImports,
                         `../definitions/${method.returnDefinition.name}`,
-                        method.returnDefinition.name
+                        method.returnDefinition.name,
+                        mergedOptions
                     );
                 }
                 // TODO: Deduplicate PortMethods
@@ -221,16 +230,15 @@ export async function generate(
                         },
                         {
                             name: "callback",
-                            type: `(err: any, result: ${
-                                method.returnDefinition ? method.returnDefinition.name : "unknown"
-                            }, rawResponse: any, soapHeader: any, rawRequest: any) => void`, // TODO: Use ts-morph to generate proper type
+                            type: `(err: any, result: ${method.returnDefinition ? method.returnDefinition.name : "unknown"
+                                }, rawResponse: any, soapHeader: any, rawRequest: any) => void`, // TODO: Use ts-morph to generate proper type
                         },
                     ],
                     returnType: "void",
                 });
             } // End of PortMethod
             if (!mergedOptions.emitDefinitionsOnly) {
-                addSafeImport(serviceImports, `../ports/${port.name}`, port.name);
+                addSafeImport(serviceImports, `../ports/${port.name}`, port.name,mergedOptions);
                 servicePorts.push({
                     name: sanitizePropName(port.name),
                     isReadonly: true,
@@ -252,7 +260,7 @@ export async function generate(
         } // End of Port
 
         if (!mergedOptions.emitDefinitionsOnly) {
-            addSafeImport(clientImports, `./services/${service.name}`, service.name);
+            addSafeImport(clientImports, `./services/${service.name}`, service.name,            mergedOptions);
             clientServices.push({ name: sanitizePropName(service.name), type: service.name });
 
             serviceFile.addImportDeclarations(serviceImports);
@@ -300,9 +308,8 @@ export async function generate(
                             type: method.paramDefinition ? method.paramDefinition.name : "{}",
                         },
                     ],
-                    returnType: `Promise<[result: ${
-                        method.returnDefinition ? method.returnDefinition.name : "unknown"
-                    }, rawResponse: any, soapHeader: any, rawRequest: any]>`,
+                    returnType: `Promise<[result: ${method.returnDefinition ? method.returnDefinition.name : "unknown"
+                        }, rawResponse: any, soapHeader: any, rawRequest: any]>`,
                 })),
             },
         ]);
@@ -333,7 +340,7 @@ export async function generate(
     indexFile.addExportDeclarations(
         allDefinitions.map((def) => ({
             namedExports: [def.name],
-            moduleSpecifier: `./definitions/${def.name}`,
+            moduleSpecifier: `./definitions/${def.name}${mergedOptions.exportAsModule ? ".js": ""}`,
         }))
     );
     if (!mergedOptions.emitDefinitionsOnly) {
@@ -342,19 +349,19 @@ export async function generate(
         indexFile.addExportDeclarations([
             {
                 namedExports: ["createClientAsync", `${parsedWsdl.name}Client`],
-                moduleSpecifier: "./client",
+                moduleSpecifier: `./client${mergedOptions.exportAsModule ? ".js": ""}`,
             },
         ]);
         indexFile.addExportDeclarations(
             parsedWsdl.services.map((service) => ({
                 namedExports: [service.name],
-                moduleSpecifier: `./services/${service.name}`,
+                moduleSpecifier: `./services/${service.name}${mergedOptions.exportAsModule ? ".js": ""}`,
             }))
         );
         indexFile.addExportDeclarations(
             parsedWsdl.ports.map((port) => ({
                 namedExports: [port.name],
-                moduleSpecifier: `./ports/${port.name}`,
+                moduleSpecifier: `./ports/${port.name}${mergedOptions.exportAsModule ? ".js": ""}`,
             }))
         );
     }
