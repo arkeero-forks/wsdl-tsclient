@@ -301,7 +301,7 @@ export async function generate(
                 properties: clientServices,
                 extends: ["SoapClient"],
                 methods: allMethods.map<OptionalKind<MethodSignatureStructure>>((method) => ({
-                    name: sanitizePropName(`${method.name}Async`),
+                    name: sanitizePropName(`${method.name}`),
                     parameters: [
                         {
                             name: camelcase(method.paramName),
