@@ -2,8 +2,8 @@
 import yargs from "yargs/yargs";
 import { hideBin } from "yargs/helpers";
 import path from "path";
-import { Logger } from "./utils/logger";
-import { parseAndGenerate, Options } from "./index";
+import { Logger } from "./utils/logger.js";
+import { parseAndGenerate, Options } from "./index.js";
 import packageJson from "../package.json";
 
 const conf = yargs(hideBin(process.argv.slice(2)))
