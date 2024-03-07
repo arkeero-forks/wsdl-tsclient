@@ -1,0 +1,217 @@
+env:
+  browser: true
+  es2021: true
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+  project:
+    - "./tsconfig.eslint.json"
+plugins:
+  - "@typescript-eslint"
+  - "@stylistic"
+ignorePatterns:
+  - "dist/*"
+  - node_modules/*
+  - temp/*
+  - ".old/*"
+rules:
+  no-eval: 2
+  no-var: 0
+  eqeqeq: 2
+  no-const-assign: 2
+  no-unsafe-finally: 2
+  no-duplicate-imports: 2
+  no-duplicate-case: 2
+  no-dupe-args: 2
+  no-dupe-else-if: 2
+  no-dupe-keys: 2
+  no-fallthrough: 2
+  no-irregular-whitespace: 2
+  prefer-const: 0
+  no-unused-vars: 0
+  no-prototype-builtins: 0
+  default-case:
+    - 2
+    - commentPattern: "^skip\\sdefault"
+  default-case-last: 2
+  new-cap: 0  
+  comma-dangle: 0
+  no-useless-constructor: 0
+  camelcase: 0
+  dot-notation: 0
+  no-dupe-class-members: 0
+  no-use-before-define: 0
+  rest-spread-spacing: 0
+  "@typescript-eslint/no-unused-vars": 0 
+  "@typescript-eslint/dot-notation": 2
+  "@typescript-eslint/explicit-function-return-type":
+    - 1
+    - allowIIFEs: true
+      allowHigherOrderFunctions: true
+  "@typescript-eslint/naming-convention": 0
+  "@typescript-eslint/no-dupe-class-members": 2  
+  "@typescript-eslint/no-require-imports": 2
+  "@typescript-eslint/no-unnecessary-type-arguments": 2
+  "@typescript-eslint/no-useless-constructor": 2
+  "@typescript-eslint/no-use-before-define": 0
+  "@typescript-eslint/prefer-ts-expect-error": 0
+  "@typescript-eslint/promise-function-async": 1
+  "@typescript-eslint/ban-ts-comment": 0
+  "@typescript-eslint/no-explicit-any": 0
+  "@stylistic/array-bracket-spacing":
+    - 2
+    - always
+    - objectsInArrays: false
+  "@stylistic/array-bracket-newline":
+    - 2
+    - minItems: 3
+      multiline: true
+  "@stylistic/array-element-newline":
+    - 2
+    - always
+    - minItems: 3
+      multiline: true
+  "@stylistic/arrow-parens":
+    - 2
+    - as-needed
+  "@stylistic/block-spacing":
+    - 2
+    - always
+  "@stylistic/brace-style":
+    - 2
+    - stroustrup
+    - allowSingleLine: true
+  "@stylistic/comma-dangle":
+    - 2
+    - never
+  "@stylistic/comma-spacing":
+    - 2
+    - before: false
+      after: true
+  "@stylistic/comma-style":
+    - 2
+    - last
+  "@stylistic/computed-property-spacing":
+    - 2
+    - never
+    - enforceForClassMembers: true
+  "@stylistic/dot-location":
+    - 2
+    - property
+  "@stylistic/eol-last":
+    - 2
+    - always
+  "@stylistic/function-call-argument-newline":
+    - 2
+    - never
+  "@stylistic/function-call-spacing":
+    - 2
+    - never
+  "@stylistic/function-paren-newline":
+    - 2
+    - minItems: 7
+  "@stylistic/implicit-arrow-linebreak":
+    - 2
+    - beside
+  "@stylistic/indent":
+    - 2
+    - 2
+    - SwitchCase: 1
+      VariableDeclarator: 1
+      outerIIFEBody: 0
+      ObjectExpression: 1
+      ImportDeclaration: 1
+      ArrayExpression: 1
+  "@stylistic/linebreak-style":
+    - 2
+    - unix
+  "@stylistic/lines-between-class-members":
+    - 2
+    - enforce:
+        - blankLine: always
+          prev: "*"
+          next: method
+        - blankLine: always
+          prev: method
+          next: "*"
+        - blankLine: always
+          prev: field
+          next: field
+    - exceptAfterSingleLine: true
+  "@stylistic/max-len":
+    - 1
+    - code: 140
+      comments: 140
+      ignoreTrailingComments: true
+      ignoreUrls: true
+      ignoreStrings: true
+      ignoreTemplateLiterals: true
+      ignoreRegExpLiterals: true
+  "@stylistic/multiline-ternary":
+    - 2
+    - always
+  "@stylistic/newline-per-chained-call":
+    - 2
+    - ignoreChainWithDepth: 2
+  "@stylistic/no-mixed-spaces-and-tabs": 2
+  "@stylistic/no-multi-spaces": 2
+  "@stylistic/no-tabs": 2
+  "@stylistic/no-trailing-spaces":
+    - 2
+    - ignoreComments: true
+  "@stylistic/no-whitespace-before-property": 2
+  "@stylistic/nonblock-statement-body-position":
+    - 2
+    - below
+  "@stylistic/object-curly-newline":
+    - 2
+    - ObjectExpression:
+        minProperties: 1
+      ObjectPattern:
+        minProperties: 4
+      ImportDeclaration:
+        minProperties: 4
+      ExportDeclaration:
+        minProperties: 4
+  "@stylistic/one-var-declaration-per-line":
+    - 2
+    - always
+  "@stylistic/quote-props":
+    - 2
+    - always
+  "@stylistic/object-property-newline": 2
+  "@stylistic/rest-spread-spacing":
+    - 2
+    - always
+  "@stylistic/semi":
+    - 2
+    - always
+  "@stylistic/semi-spacing":
+    - 2
+    - before: false
+      after: false
+  "@stylistic/space-before-blocks": 2
+  "@stylistic/space-before-function-paren":
+    - 2
+    - never
+  "@stylistic/padding-line-between-statements":
+    - 2
+    - blankLine: always
+      prev:
+        - const
+        - let
+        - var
+      next: "*"
+    - blankLine: any
+      prev:
+        - const
+        - let
+        - var
+      next:
+        - const
+        - let
+        - var

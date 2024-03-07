@@ -1,0 +1,36 @@
+{
+	"editor.formatOnSave": false,
+	"[javascript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"eslint.validate": [
+		"typescript"
+	],
+	"[json]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"[env]": {
+		"editor.defaultFormatter": "IronGeek.vscode-env"
+	},
+	"[dotenv]": {
+		"editor.defaultFormatter": "IronGeek.vscode-env"
+	},
+	"eslint.enable": true,
+	"eslint.format.enable": true,
+	"eslint.debug": false,
+	"eslint.experimental.useFlatConfig": false,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"files.associations": {
+		".env": "env",
+		"*.env.development": "env",
+		"*.env.production": "env"
+	},
+}

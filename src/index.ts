@@ -8,114 +8,113 @@ export { generate } from "./generator.js";
 export { parseWsdl } from "./parser.js";
 
 export enum ModelPropertyNaming {
-    "camelCase" = "camelCase",
-    "PascalCase" = "PascalCase",
+
+  "camelCase" = "camelCase",
+  "PascalCase" = "PascalCase"
 }
 export interface Options {
-    /**
+  /**
      * Generate only Definitions
      * @default false
      */
-    emitDefinitionsOnly: boolean;
-    /**
+  "emitDefinitionsOnly": boolean;
+  /**
      * Prefix for generated interface names
      * @default ""
      */
-    modelNamePreffix: string;
-    /**
+  "modelNamePreffix": string;
+  /**
      * Suffix for generated interface names
      * @default ""
      */
-    modelNameSuffix: string;
-    /**
+  "modelNameSuffix": string;
+  /**
      * Case-insensitive name while parsing definition names
      * @default false
      */
-    caseInsensitiveNames: boolean;
-    /**
+  "caseInsensitiveNames": boolean;
+  /**
      * Maximum count of definition's with same name but increased suffix. Will throw an error if exceed
      * @default 64
      */
-    maxRecursiveDefinitionName: number;
-    modelPropertyNaming: ModelPropertyNaming;
-    /**
+  "maxRecursiveDefinitionName": number;
+  "modelPropertyNaming": ModelPropertyNaming | null;
+  /**
      * Print verbose logs
      * @default false
      */
-    verbose: boolean;
-    /**
+  "verbose": boolean;
+  /**
      * Suppress all logs
      * @default false
      */
-    quiet: boolean;
-    /**
+  "quiet": boolean;
+  /**
      * Logs with colors
      * @default true
      */
-    colors: boolean;
-    /**
+  "colors": boolean;
+  /**
      * Createfolders from wdsl name using tolowercase
      * @default true
      */
-    folderFromWsdl2LowerCase: boolean;
-    /**
+  "folderFromWsdl2LowerCase": boolean;
+  /**
      * Export imports with filename
      * @default false
      */
-    exportAsModule: boolean;
+  "exportAsModule": boolean;
 }
 
 export const defaultOptions: Options = {
-    emitDefinitionsOnly: false,
-    modelNamePreffix: "",
-    modelNameSuffix: "",
-    exportAsModule: false,
-    folderFromWsdl2LowerCase: true,
-    caseInsensitiveNames: false,
-    maxRecursiveDefinitionName: 64,
-    modelPropertyNaming: null,
-    verbose: false,
-    quiet: false,
-    colors: true,
+  "emitDefinitionsOnly": false,
+  "modelNamePreffix": "",
+  "modelNameSuffix": "",
+  "exportAsModule": false,
+  "folderFromWsdl2LowerCase": true,
+  "caseInsensitiveNames": false,
+  "maxRecursiveDefinitionName": 64,
+  "modelPropertyNaming": null,
+  "verbose": false,
+  "quiet": false,
+  "colors": true
 };
 
-export async function parseAndGenerate(
-    wsdlPath: string,
-    outDir: string,
-    options: Partial<Options> = {},
-): Promise<void> {
-    const mergedOptions: Options = {
-        ...defaultOptions,
-        ...options,
-    };
+export async function parseAndGenerate(wsdlPath: string,
+  outDir: string,
+  options: Partial<Options> = {}): Promise<void> {
+  const mergedOptions: Options = {
+    ... defaultOptions,
+    ... options
+  };
 
-    if (options.verbose) {
-        Logger.isDebug = true;
-    }
-    if (options.colors === false) {
-        Logger.colors = false;
-    }
-    if (options.quiet) {
-        Logger.isDebug = false;
-        Logger.isLog = false;
-        Logger.isInfo = false;
-        Logger.isWarn = false;
-        Logger.isError = false;
-    }
+  if (options.verbose) {
+    Logger.isDebug = true;
+  }
+  if (options.colors === false) {
+    Logger.colors = false;
+  }
+  if (options.quiet) {
+    Logger.isDebug = false;
+    Logger.isLog = false;
+    Logger.isInfo = false;
+    Logger.isWarn = false;
+    Logger.isError = false;
+  }
 
-    // Logger.debug(`Options: ${JSON.stringify(mergedOptions, null, 2)}`);
+  // Logger.debug(`Options: ${JSON.stringify(mergedOptions, null, 2)}`);
 
-    const timeParseStart = process.hrtime();
-    const parsedWsdl = await parseWsdl(wsdlPath, mergedOptions);
-    Logger.debug(`Parser time: ${timeElapsed(process.hrtime(timeParseStart))}ms`);
+  const timeParseStart = process.hrtime();
+  const parsedWsdl = await parseWsdl(wsdlPath, mergedOptions);
 
-    const timeGenerateStart = process.hrtime();
-    await generate(
-        parsedWsdl,
-        path.join(outDir, mergedOptions.folderFromWsdl2LowerCase ? parsedWsdl.name.toLowerCase() : parsedWsdl.name),
-        mergedOptions,
-    );
-    Logger.debug(`Generator time: ${timeElapsed(process.hrtime(timeGenerateStart))}ms`);
+  Logger.debug(`Parser time: ${timeElapsed(process.hrtime(timeParseStart))}ms`);
 
-    Logger.info(`Generating finished: ${timeElapsed(process.hrtime(timeParseStart))}ms`);
+  const timeGenerateStart = process.hrtime();
+
+  await generate(parsedWsdl, path.join(outDir, mergedOptions.folderFromWsdl2LowerCase
+    ? parsedWsdl.name.toLowerCase()
+    : parsedWsdl.name), mergedOptions);
+  Logger.debug(`Generator time: ${timeElapsed(process.hrtime(timeGenerateStart))}ms`);
+
+  Logger.info(`Generating finished: ${timeElapsed(process.hrtime(timeParseStart))}ms`);
 }

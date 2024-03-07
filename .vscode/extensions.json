@@ -1,0 +1,15 @@
+{
+	"recommendations": [
+		"folke.vscode-monorepo-workspace",
+		"waderyan.gitblame",
+		"mhutchie.git-graph",
+		"crystal-spider.jsdoc-generator",
+		"yzhang.markdown-all-in-one",
+		"mechatroner.rainbow-csv",
+		"redhat.vscode-yaml",
+		"q.typescript-mono-repo-import-helper",
+		"aaron-bond.better-comments",
+		"IronGeek.vscode-env",
+		"dbaeumer.vscode-eslint"
+	]
+}
