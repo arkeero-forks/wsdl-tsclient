@@ -14,6 +14,7 @@ import { Logger } from "./utils/logger.js";
 
 export interface GeneratorOptions {
   "exportAsModule": boolean;
+  "customSoapPath": string;
   "emitDefinitionsOnly": boolean;
   "modelPropertyNaming": ModelPropertyNaming | null;
 }
@@ -21,7 +22,8 @@ export interface GeneratorOptions {
 const defaultOptions: GeneratorOptions = {
   "exportAsModule": false,
   "emitDefinitionsOnly": false,
-  "modelPropertyNaming": null
+  "modelPropertyNaming": null,
+  "customSoapPath": "soap"
 };
 
 /**
@@ -274,7 +276,7 @@ export async function generate(parsedWsdl: ParsedWsdl,
     });
 
     clientFile.addImportDeclaration({
-      "moduleSpecifier": "soap",
+      "moduleSpecifier": options.customSoapPath!,
       "namedImports": [
         {
           "name": "Client",

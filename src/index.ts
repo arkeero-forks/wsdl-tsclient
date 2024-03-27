@@ -64,6 +64,11 @@ export interface Options {
      * @default false
      */
   "exportAsModule": boolean;
+  /**
+     * Establish custom path for soap types
+     * @default false
+     */
+  "customSoapPath": string;
 }
 
 export const defaultOptions: Options = {
@@ -77,7 +82,8 @@ export const defaultOptions: Options = {
   "modelPropertyNaming": null,
   "verbose": false,
   "quiet": false,
-  "colors": true
+  "colors": true,
+  "customSoapPath":"soap"
 };
 
 export async function parseAndGenerate(wsdlPath: string,
