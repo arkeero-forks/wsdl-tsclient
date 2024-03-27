@@ -1,6 +1,6 @@
 {
   "name": "@arkeero-forks/wsdl-tsclient",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Generate typescript soap client with typescript definitons from WSDL file.",
   "exports": "./dist/src/index.js",
   "type": "module",
